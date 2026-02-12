@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Advanced VR Dream Villa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- A-Frame -->
+  <script src="./script/aframe.min.js"></script>
+  <!-- Extras -->
+  <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+<!-- Simple Water Shader -->
+  <script>
+    AFRAME.registerComponent('water-motion', {
+      tick: function (time) {
+        const material = this.el.getObject3D('mesh').material;
+        if (material.map) {
+          material.map.offset.y = time / 5000;
+          material.map.offset.x = time / -7000;
+        }
+      }
+    });
+  </script>
+ 
+</head>
+
+<body>
+<a-scene loading-screen="dotsColor: white; backgroundColor: black" renderer="antialias: true" shadow="type: pcfsoft">
+
+  <!-- ================= ASSETS ================= -->
+  <a-assets timeout="20000">
+    <img id="sky" src="assets/sky.jpg" />
+    <img id="grass" src="assets/grass.jpg" />
+    <img id="wood" src="assets/wood.jpg" />
+    <img id="marble" src="assets/marble.jpg" />
+    <img id="water" src="assets/water.jpg" />
+
+    <!-- Optional GLTF models -->
+    <a-asset-item id="sofa" src="./models/sofa.glb"></a-asset-item>
+    <a-asset-item id="tree" src="./models/tree.glb"></a-asset-item>
+    <a-asset-item id="villa" src="./models/villa.glb"></a-asset-item>
+    <a-asset-item id="room" src="./models/room.glb"></a-asset-item>
+    <a-asset-item id="pool" src="./models/pool.glb"></a-asset-item>
+    <a-asset-item id="chairs" src="./models/chairs.glb"></a-asset-item>
+    <a-asset-item id="car" src="./models/car.glb"></a-asset-item>
+    <a-asset-item id="carr" src="./models/carr.glb"></a-asset-item>
+    <a-asset-item id="trees" src="./models/trees.glb"></a-asset-item>
+    <a-asset-item id="wall" src="./models/wall.glb"></a-asset-item>
+    <a-asset-item id="plant" src="./models/plant.glb"></a-asset-item>
+    <a-asset-item id="lounger" src="./models/lounger.glb"></a-asset-item>
+<!-- ================= LIGHTING ================= -->
+
+<!-- Soft base light -->
+<a-entity light="type: ambient; intensity: 0.35"></a-entity>
+
+<!-- Warm sunset light -->
+<a-entity 
+  light="type: directional; intensity: 1.2; color: #ffd7a1; castShadow: true"
+  position="10 15 -10">
+</a-entity>
+
+<!-- Indoor warm lights -->
+<a-entity light="type: point; intensity: 0.9; color: #ffb86c"
+          position="0 8 -5"></a-entity>
+
+<a-entity light="type: point; intensity: 0.7; color: #ffb86c"
+          position="-5 8 -5"></a-entity>
+
+<!-- Pool glow -->
+<a-entity 
+  light="type: point; intensity: 1.2; color: #00e5ff"
+  position="-21 1.2 8.8">
+</a-entity>
+
+
+
+  </a-assets>
+
+  <!-- ================= ENVIRONMENT ================= -->
+  <a-sky src="#sky" rotation="0 -90 0"></a-sky>
+
+  <a-plane src="#grass" rotation="-90 0 0" width="90" height="90" repeat="10 10" shadow></a-plane>
+
+  <!-- ================= LIGHTING ================= -->
+  <a-entity light="type: ambient; intensity: 0.5"></a-entity>
+  <a-entity light="type: directional; intensity: 0.8; castShadow: true" position="5 10 2"></a-entity>
+
+  <!-- ================= VILLA STRUCTURE ================= -->
+  
+ <a-entity gltf-model="#villa" position="0 6 -5" scale="50 50 50"></a-entity>
+<a-entity gltf-model="#sofa" position="1.9 0 -3" scale="1 1 1"></a-entity>
+ <a-box position="0 0 0" width="66" depth="28" height="0.08" material="src:#marble; roughness:0.4; metalness:0.1"
+></a-box>
+ <a-entity gltf-model="#room" position="-5 0 -6" scale="4 7 4"></a-entity>
+ <a-entity gltf-model="#pool" position="-21 0 9" scale="0.9 0.9 0.9"></a-entity>
+  <!-- ================= SWIMMING POOL ================= -->
+  <a-box position="-21 0.8 8.8" width="7.5" depth="7.5" height="0.1" color="" material="src: #water; opacity: 3.1; repeat: 2 2 4" water-motion></a-box>
+
+  <!-- ================= DECORATION ================= -->
+  <a-entity gltf-model="#tree" position="-17 0 -19" scale="1 1 1"></a-entity>
+  <a-entity gltf-model="#tree" position="23 0 -29" scale="3 2 3"></a-entity>
+  <a-entity gltf-model="#tree" position="-29 0 -39" scale="3 3 3"></a-entity>
+  <a-entity gltf-model="#chairs" position="-20 5 -2" scale="0.02 0.02 0.02"></a-entity>
+  <a-entity gltf-model="#car" position="9 0 6" scale="0.02 0.02 0.02"></a-entity>
+  <a-entity gltf-model="#carr" position="13 0 6" scale="0.9 0.9 0.9"></a-entity>
+  <a-entity gltf-model="#trees" position="-179 0 14" scale="1 1 1"></a-entity>
+  <a-entity gltf-model="#trees" position="-145 0 14" scale="1 1 1"></a-entity>
+  <a-entity gltf-model="#wall" position="-31 6 1" scale="2 50 85"></a-entity>
+  <a-entity gltf-model="#wall" position="31 6 1" scale="2 50 97"></a-entity>
+  <a-entity gltf-model="#plant" position="18 0 -6" scale="0.7 0.7 0.7"></a-entity>
+  <a-entity gltf-model="#plant" position="-20 0 -8" scale="0.7 0.7 0.7"></a-entity>
+  <a-entity gltf-model="#lounger" position="-15 0 13" scale="0.06 0.06 0.06"></a-entity>
+  <a-entity gltf-model="#lounger" position="-15 0 11" scale="0.06 0.06 0.06"></a-entity>
+  <a-entity gltf-model="#lounger" position="-15 0 9" scale="0.06 0.06 0.06"></a-entity>
+
+  <!-- ================= CAMERA & CONTROLS ================= -->
+  <a-entity movement-controls="speed: 0.1">
+    <a-entity camera look-controls wasd-controls position="0 6 30"></a-entity>
+  </a-entity>
+
+</a-scene>
+
+ 
+</body>
+</html>
